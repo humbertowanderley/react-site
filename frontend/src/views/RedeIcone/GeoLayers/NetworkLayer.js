@@ -220,24 +220,32 @@ class NetworkLayer extends Component {
             const download = link.link_download;
             const upload = link.link_upload;
             const bandwidth = link.link_speed;
+            const link_status = link.link_status;
             
             var max_util = 0;
             if (download >= upload)
                 max_util = (download / bandwidth) * 100;
             else
                 max_util = (upload / bandwidth) * 100;
-
-            var color = "black";
-            if (max_util <= 25)
-                color = 'blue'
-            if (max_util > 25 && max_util <= 50)
-                color = '#2cd459';
-            if (max_util > 50 && max_util <= 75)
-                color = '#c1cf0a';
-            if (max_util > 75 && max_util <= 90)
-                color = '#e39f0e';
-            if (max_util > 90)
-                color = '#f26535';
+            
+            var color = 'black';
+            if(link_status == "up")
+            {
+                if (max_util <= 25)
+                    color = 'blue'
+                if (max_util > 25 && max_util <= 50)
+                    color = '#2cd459';
+                if (max_util > 50 && max_util <= 75)
+                    color = '#c1cf0a';
+                if (max_util > 75 && max_util <= 90)
+                    color = '#e39f0e';
+                if (max_util > 90)
+                    color = '#f26535';
+            }else{
+                color = "black";
+            }
+            
+            
 
 
             return color;
@@ -259,18 +267,18 @@ class NetworkLayer extends Component {
         }).forEach(link =>{
 
             var status_icon = null;
-            if (link.clientA_status === "up")
+            if (link.clientB_status === "up")
                 status_icon = icons.greenIcon
             else
                 status_icon = icons.redIcon
 
-            const marker = <Marker position={link.clientA_coordinates} icon={status_icon}>
+            const marker = <Marker position={link.clientB_coordinates} icon={status_icon}>
                 <Popup className="markers_Popup">
                     <div >
-                        <iframe title={link.clientA_initials} src={link.clientA_graphs} width="450" height="300" frameBorder="0"></iframe>
+                        <iframe title={link.clientB_initials} src={link.clientB_graphs} width="450" height="300" frameBorder="0"></iframe>
                     </div>
                 </Popup>
-                <Tooltip direction="bottom" offset={[0, 20]} opacity={0.8} >{link.clientA_initials}</Tooltip>
+                <Tooltip direction="bottom" offset={[0, 20]} opacity={0.8} >{link.clientB_initials}</Tooltip>
             </Marker>
 
             layer_markers.push(marker);

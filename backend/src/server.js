@@ -6,7 +6,7 @@ const server = express();
 
 mongoose.connect('mongodb+srv://site-pop-pe:site-pop-pe@pop-pe-crfuj.mongodb.net/site?retryWrites=true&w=majority',
                  
-{useNewUrlParser: true
+{useNewUrlParser: true, useFindAndModify: false
 });
 
 server.use(express.json());

@@ -19,7 +19,8 @@ routes.get('/', (request, response)=>{
 
 
 routes.post('/icone-link-create', IconeLinkController.create);
-routes.get('/icone-link-show',IconeLinkController.show)
+routes.get('/icone-link-show',IconeLinkController.show);
+routes.put('/icone-link-update',IconeLinkController.update);
 
 
 routes.post('/user-create', UserController.create);

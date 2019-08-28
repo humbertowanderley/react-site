@@ -17,7 +17,6 @@ const IconeLinkSchema = new Schema({
     clientA_ip: {
         type: String,
         required: true,
-        unique: true
     },
     clientA_interface: {
         type: String,
@@ -48,7 +47,6 @@ const IconeLinkSchema = new Schema({
     clientB_ip: {
         type: String,
         required: true,
-        unique: true
     },
     clientB_interface: {
         type: String,

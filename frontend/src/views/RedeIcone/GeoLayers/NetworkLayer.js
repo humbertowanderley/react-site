@@ -341,7 +341,7 @@ class NetworkLayer extends Component {
             const enlace = <Polyline positions={link.link_coordinates} weight={8} color={color}>
                 <Popup className="markers_Popup">
                     <Row>
-                        <Col xs="4" lg="12">
+                        <Col xs="12" lg="12">
                 <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> {link.link_name}
@@ -352,8 +352,8 @@ class NetworkLayer extends Component {
                   <tr className="text-center">
                     <th>A Side</th>
                     <th>B Side</th>
-                    <th>Download A -> B</th>
-                    <th>Upload A -> B</th>
+                    <th>A <i className="fa fa-arrow-left fa-lg mt-4"></i> B</th>
+                    <th>A  <i className="fa fa-arrow-right fa-lg mt-4"></i> B</th>
                     <th>Link Status</th>
                   </tr>
                   </thead>

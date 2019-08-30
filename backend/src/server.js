@@ -27,7 +27,7 @@ async function get_linkData() {
 
                 const responseBSide_link_status = await axios.get("http://localhost:8086/query?db=interfaces_icone&epoch=ms&q=SELECT+last(ifOperStatus)+FROM+ifEstatisticas+WHERE+agent_host=" + "'" + link.clientB_ip + "'" + "+AND+ifName=" + "'" + link.clientB_interface + "'");
                 
-                console.log();
+              
 
                 if (responseASide_link_status.data.results[0].series[0].values[0][1] == 1) {
                     link_status = "up";
@@ -79,8 +79,8 @@ async function get_linkData() {
                         "key": {"link_name": link.link_name},
                         "fields":{
                             "link_status": link_status,
-                            "link_download": link_download,
-                            "link_upload": link_upload,
+                            "link_download": link_download.toFixed(2),
+                            "link_upload": link_upload.toFixed(2),
                             "clientA_status": clientA_status,
                             "clientB_status": clientB_status
                         }

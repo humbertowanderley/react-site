@@ -39,10 +39,6 @@ module.exports = {
                 request.body.key, request.body.fields,{new:true}, (err, newLink) =>{if (err) return response.json({message: "Erro!"});;
                     return newLink;});
             return response.json(newLink);
-        
-    
-        
-
 
     }
 

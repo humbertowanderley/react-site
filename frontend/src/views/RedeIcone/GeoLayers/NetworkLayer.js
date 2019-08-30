@@ -6,6 +6,8 @@ import geodata_estadual from './Geodata/geo_estadual';
 import axios from 'axios';
 import './NetworkLayer.css'
 
+import { Badge, Card, CardBody, CardHeader, Table, Row, Col } from 'reactstrap';
+
 
 
 
@@ -275,16 +277,59 @@ class NetworkLayer extends Component {
         }).forEach(link =>{
 
             var status_icon = null;
+            var client_status_color = "danger";
             if (link.clientB_status === "up")
-                status_icon = icons.greenIcon
+            {
+                status_icon = icons.greenIcon;
+                client_status_color = "success";
+            }
             else
-                status_icon = icons.redIcon
+            {
+                status_icon = icons.redIcon;
+                client_status_color ="danger";
+            }
 
+
+            var link_status_color = "danger";
+            if(link.link_status === "up")
+                link_status_color = "success";
+            else
+                link_status_color = "danger";
+
+            
+
+                
+            
             const marker = <Marker position={link.clientB_coordinates} icon={status_icon}>
                 <Popup className="markers_Popup">
-                    <div >
-                        <iframe title={link.clientB_initials} src={link.clientB_graphs} width="450" height="300" frameBorder="0"></iframe>
-                    </div>
+                    <Row>
+                        <Col xs="4" lg="12">
+                <Card>
+              <CardHeader>
+                <i className="fa fa-align-justify"></i> {link.clientB_initials}
+              </CardHeader>
+              <CardBody>
+                <Table responsive striped size="sm">
+                  <thead>
+                  <tr className="text-center">
+                    <th>Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr className="text-center">
+    
+                    <td>
+                      <Badge color={client_status_color}>{link.clientB_status}</Badge>
+                    </td>
+                  </tr>
+    
+                  </tbody>
+                </Table>
+    
+              </CardBody>
+            </Card>
+            </Col>
+            </Row>
                 </Popup>
                 <Tooltip direction="bottom" offset={[0, 20]} opacity={0.8} >{link.clientB_initials}</Tooltip>
             </Marker>;
@@ -295,9 +340,41 @@ class NetworkLayer extends Component {
 
             const enlace = <Polyline positions={link.link_coordinates} weight={8} color={color}>
                 <Popup className="markers_Popup">
-                    <div >
-                        <iframe title={link.link_initials} src={link.link_graphs} width="450" height="300" frameBorder="0"></iframe>
-                    </div>
+                    <Row>
+                        <Col xs="4" lg="12">
+                <Card>
+              <CardHeader>
+                <i className="fa fa-align-justify"></i> {link.link_name}
+              </CardHeader>
+              <CardBody>
+                <Table responsive striped size="sm">
+                  <thead>
+                  <tr className="text-center">
+                    <th>A Side</th>
+                    <th>B Side</th>
+                    <th>Download A -> B</th>
+                    <th>Upload A -> B</th>
+                    <th>Link Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr className="text-center">
+                    <td>{link.clientA_initials}</td>
+                    <td>{link.clientB_initials}</td>
+                    <td>{link.link_download} Mbps</td>
+                    <td>{link.link_upload} Mbps</td>
+                    <td>
+                      <Badge color={link_status_color}>{link.link_status}</Badge>
+                    </td>
+                  </tr>
+    
+                  </tbody>
+                </Table>
+    
+              </CardBody>
+            </Card>
+            </Col>
+            </Row>
                 </Popup>
                 <Tooltip sticky direction="bottom" offset={[0, 20]} opacity={0.8}>
                     {link.clientA_initials + ' <=> ' + link.clientB_initials}  
@@ -331,45 +408,6 @@ class NetworkLayer extends Component {
         });
 
         
-
-        // this.state.markers.features.forEach(feature => {
-
-        //     var status_icon = null;
-        //     if (feature.properties.status === "up")
-        //         status_icon = icons.greenIcon
-        //     else
-        //         status_icon = icons.redIcon
-
-        //     const component = <Marker position={feature.geometry.coordinates} icon={status_icon}>
-        //         <Popup className="markers_Popup">
-        //             <div >
-        //                 <iframe title={feature.properties.id} src={feature.properties.graphs} width="450" height="300" frameBorder="0"></iframe>
-        //             </div>
-        //         </Popup>
-        //         <Tooltip direction="bottom" offset={[0, 20]} opacity={0.8} >{feature.properties.id}</Tooltip>
-        //     </Marker>
-
-
-        //     layer_markers.push(component);
-
-
-        // });
-
-        // this.state.links.features.forEach(feature => {
-        //     const component = <Polyline positions={feature.geometry.coordinates} weight={8} color={feature.properties.link_color}>
-        //         <Popup className="markers_Popup">
-        //             <div >
-        //                 <iframe title={feature.properties.id} src={feature.properties.graphs} width="450" height="300" frameBorder="0"></iframe>
-        //             </div>
-        //         </Popup>
-        //         <Tooltip sticky direction="bottom" offset={[0, 20]} opacity={0.8}>
-        //             {feature.properties.start_point+ ' <=> ' + feature.properties.end_point}  
-        //         </Tooltip>
-        //     </Polyline>
-        //     layer_links.push(component);
-
-
-        // });
 
 
 

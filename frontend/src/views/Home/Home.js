@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { 
     Card,
     CardBody,
@@ -22,6 +23,8 @@ class Home extends Component {
         this.state = {
           dropdownOpen: false,
           radioSelected: 2,
+          icone_clientes_up: 0,
+          icone_clientes_down: 0
         };
       }
     
@@ -39,6 +42,38 @@ class Home extends Component {
     
       loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
+      componentDidMount() {
+
+
+        this.getInfo();
+        this.interval = setInterval(() => this.getInfo(), 60000);
+
+
+
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    async getInfo(){
+        
+        try{
+            const clientsStatus = await axios.get("http://localhost:3333/icone-info");
+
+            this.setState({icone_clientes_up: clientsStatus.data.clients_up,
+            icone_clientes_down: clientsStatus.data.clients_down});
+
+        }catch{
+            console.log("erro na api.");
+            return "error";
+        }
+
+        return "sucess";
+
+
+    }
+
     render() {
       return (
         <div className="animated fadeIn">
@@ -52,7 +87,7 @@ class Home extends Component {
                     <CardBody>
                         <Row>
                             <Col sm="6" md="6">
-                                <Widget04 icon="icon-people" color="success" header="36" value="100" invert>Clientes UP
+                                <Widget04 icon="icon-people" color="success" header={this.state.icone_clientes_up} value="100" invert>Clientes UP
                                     <ButtonGroup className="float-right">
                                         <ButtonDropdown id='widget1' isOpen={this.state.widget1} toggle={() => { this.setState({ widget1: !this.state.widget1 }); }}>
                                             <DropdownToggle caret className="p-0" color="transparent">
@@ -69,7 +104,7 @@ class Home extends Component {
                                     </Widget04>
                             </Col>
                             <Col sm="6" md="6">
-                                <Widget04 icon="icon-people" color="danger" header="0" value="100" invert>Clientes Down
+                                <Widget04 icon="icon-people" color="danger" header={this.state.icone_clientes_down} value="100" invert>Clientes Down
                                     <ButtonGroup className="float-right">
                                         <ButtonDropdown id='widget2' isOpen={this.state.widget2} toggle={() => { this.setState({ widget2: !this.state.widget2 }); }}>
                                             <DropdownToggle caret className="p-0" color="transparent">

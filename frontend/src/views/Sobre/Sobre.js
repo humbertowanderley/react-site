@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { 
+
     Card,
     CardBody,
     CardHeader,
@@ -50,8 +51,8 @@ class Home extends Component {
                     <CardBody>
                     <img src={'../../assets/img/avatars/zuleika.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />     
                     </CardBody>
-                    <CardFooter>
-                       card1
+                    <CardFooter className="text-center">
+                    <p>Zuleika Tenório</p> <p>Coordenadora</p>
                     </CardFooter>
                 </Card>
             </Col>
@@ -60,8 +61,8 @@ class Home extends Component {
                     <CardBody>
                     <img src={'../../assets/img/avatars/rodrigo.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
                     </CardBody>
-                    <CardFooter>
-                       card2
+                    <CardFooter className="text-center">
+                       <p>Rodrigo Braynner</p> <p>Supervisor</p>
                     </CardFooter>
                 </Card>
             </Col>
@@ -71,8 +72,8 @@ class Home extends Component {
                     <CardBody>
                     <img src={'../../assets/img/avatars/marcelo.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />                 
                     </CardBody>
-                    <CardFooter>
-                       card3
+                    <CardFooter className="text-center">
+                       <p>Marcelo Monteiro</p> <p>Analista</p>
                     </CardFooter>
                 </Card>
             </Col>
@@ -82,8 +83,9 @@ class Home extends Component {
                     <CardBody>
                     <img src={'../../assets/img/avatars/zé.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />                 
                     </CardBody>
-                    <CardFooter>
-                       card4
+                    <CardFooter className="text-center">
+                     
+                       <p>José Carlos</p> <p>Analista</p>
                     </CardFooter>
                 </Card>
             </Col>

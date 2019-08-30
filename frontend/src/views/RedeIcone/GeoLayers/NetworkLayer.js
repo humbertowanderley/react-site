@@ -29,7 +29,8 @@ class NetworkLayer extends Component {
                     markers_pending: true,
                     markers: geodata_ufrpe[0],
                     links: geodata_ufrpe[1],
-                    api_links: []
+                    api_links: [],
+                    api_acesslinks: [],
                     
 
                 };
@@ -40,7 +41,8 @@ class NetworkLayer extends Component {
                     markers_pending: true,
                     markers: geodata_estadual[0],
                     links: geodata_estadual[1],
-                    api_links: []
+                    api_links: [],
+                    api_acesslinks: [],
                 }
                 break;
             default:
@@ -49,7 +51,8 @@ class NetworkLayer extends Component {
                     markers_pending: true,
                     markers: geodata_estadual[0],
                     links: geodata_estadual[1],
-                    api_links: []
+                    api_links: [],
+                    api_acesslinks: [],
                 }
         }
 
@@ -66,8 +69,10 @@ class NetworkLayer extends Component {
 
     async getLinks(){
         var links = [];
+        var acesslinks = [];
         try{
             links = await axios.get("http://localhost:3333/icone-link-show");
+            acesslinks = await axios.get("http://localhost:3333/icone-acesslink-show");
         }catch{
             console.log("api error!");
             return "error";
@@ -75,7 +80,8 @@ class NetworkLayer extends Component {
         
         
 
-        this.setState({api_links: links.data});
+        this.setState({api_links: links.data,
+            api_acesslinks: acesslinks.data});
         return "sucess!";
     }
 
@@ -261,6 +267,8 @@ class NetworkLayer extends Component {
 
         var layer_markers = [];
         var layer_links = [];
+        var layer_terminals = [];
+        var layer_acesslinks = [];
 
         this.state.api_links.filter(link => {
             return link.link_group === this.props.geolayer;
@@ -279,7 +287,7 @@ class NetworkLayer extends Component {
                     </div>
                 </Popup>
                 <Tooltip direction="bottom" offset={[0, 20]} opacity={0.8} >{link.clientB_initials}</Tooltip>
-            </Marker>
+            </Marker>;
 
             layer_markers.push(marker);
 
@@ -298,9 +306,28 @@ class NetworkLayer extends Component {
             layer_links.push(enlace);
 
 
+            
 
 
 
+
+
+        });
+
+        this.state.api_acesslinks.filter(acesslink => {
+            return acesslink.link_group === this.props.geolayer;
+        }).forEach(acesslink =>{
+            const enlace = <Polyline positions={acesslink.link_coordinates} weight={2} color='green'>
+                <Tooltip sticky direction="bottom" offset={[0, 20]} opacity={0.8}>
+                    {acesslink.link_name}  
+                </Tooltip>
+            </Polyline>
+            layer_acesslinks.push(enlace);
+
+            const marker_terminal = <Marker position={acesslink.link_coordinates[acesslink.link_coordinates.length -1]} icon={icons.switchIcon}>
+            </Marker>;
+
+            layer_terminals.push(marker_terminal);
         });
 
         
@@ -347,13 +374,14 @@ class NetworkLayer extends Component {
 
 
 
-        var layer = [layer_markers, layer_links];
+        var layer = [layer_terminals,layer_markers, layer_links, layer_acesslinks];
 
         
 
         return (
 
             layer
+            
 
 
         );
